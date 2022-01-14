@@ -1,5 +1,4 @@
 package ru.job4j.it;
-
 import java.util.*;
 
 public class BackwardArrayIt implements Iterator<Integer> {
