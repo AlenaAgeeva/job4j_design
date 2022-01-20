@@ -22,9 +22,6 @@ public class EvenNumbersIterator implements Iterator<Integer> {
         return res;
     }
 
-    public boolean check() {
-        return data.length > index && data[index] % 2 == 0;
-    }
 
     @Override
     public Integer next() {
