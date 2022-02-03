@@ -32,5 +32,12 @@ public class ForwardLinkedTest {
         Iterator<Integer> it = linked.iterator();
         assertThat(it.next(), is(2));
     }
-
+    @Test
+    public void whenAddFirstTwoTimes(){
+        ForwardLinked<String> linked = new ForwardLinked<>();
+        linked.addFirst("a");
+        linked.addFirst("b");
+        Iterator<String> it = linked.iterator();
+        assertEquals(it.next(),"b");
+    }
 }
