@@ -14,6 +14,14 @@ public class User {
         this.birthday = birthday;
     }
 
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + Integer.hashCode(children);
+        result = 31 * result + birthday.hashCode();
+        return result;
+    }
+
     public static void main(String[] args) {
         User userOne = new User("Tom", 2, new GregorianCalendar(1986, 5, 11));
         User userTwo = new User("Tom", 2, new GregorianCalendar(1986, 5, 11));
