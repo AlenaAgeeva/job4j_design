@@ -35,13 +35,4 @@ public class User {
         result = 31 * result + birthday.hashCode();
         return result;
     }
-
-    public static void main(String[] args) {
-        User userOne = new User("Tom", 2, new GregorianCalendar(1986, 5, 11));
-        User userTwo = new User("Tom", 2, new GregorianCalendar(1986, 5, 11));
-        Map<User, Object> map = new HashMap<>();
-        map.put(userOne, new Object());
-        map.put(userTwo, new Object());
-        Stream.of(map).forEach(System.out::println);
-    }
 }
