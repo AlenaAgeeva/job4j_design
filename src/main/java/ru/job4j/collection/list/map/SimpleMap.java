@@ -16,17 +16,18 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        if ((float) count / (float) capacity >= LOAD_FACTOR) {
+        if (Float.valueOf(count) / capacity >= LOAD_FACTOR) {
             expand();
         }
+        boolean rsl = false;
         int index = indexFor(hash(key.hashCode()));
         if (table[index] == null) {
             table[index] = new MapEntry<>(key, value);
             count++;
             modCount++;
-            return true;
+            rsl = true;
         }
-        return false;
+        return rsl;
     }
 
     private int hash(int hashCode) {
@@ -44,7 +45,6 @@ public class SimpleMap<K, V> implements Map<K, V> {
         for (MapEntry t : temp) {
             if (t != null) {
                 put((K) t.key, (V) t.value);
-                modCount--;
                 count--;
             }
         }
@@ -53,22 +53,23 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         int index = indexFor(hash(key.hashCode()));
-        if (table[index] != null && Objects.equals(key, table[index].key)) {
-            return table[index].value;
-        }
-        return null;
+        return table[index] != null
+                && Objects.equals(key, table[index].key)
+                ? table[index].value
+                : null;
     }
 
     @Override
     public boolean remove(K key) {
         int index = indexFor(hash(key.hashCode()));
+        boolean rsl = false;
         if (table[index] != null && Objects.equals(key, table[index].key)) {
             table[index] = null;
             modCount++;
             count--;
-            return true;
+            rsl = true;
         }
-        return false;
+        return rsl;
     }
 
     @Override
@@ -82,10 +83,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                while (table[counter] == null && counter < capacity) {
+                while (counter < capacity && table[counter] == null) {
                     counter++;
                 }
-                return false;
+                return counter < capacity;
             }
 
             @Override
@@ -93,7 +94,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return table[counter].key;
+                return table[counter++].key;
             }
         };
     }
