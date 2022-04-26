@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -8,10 +9,10 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 public class Config {
-    private final String path;
+    private final File path;
     private final Map<String, String> values = new HashMap<>();
 
-    public Config(final String path) {
+    public Config(final File path) {
         this.path = path;
     }
 
