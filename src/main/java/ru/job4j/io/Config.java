@@ -1,7 +1,11 @@
 package ru.job4j.io;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringJoiner;
 
 public class Config {
     private final String path;
@@ -14,10 +18,15 @@ public class Config {
     public void load() {
         try (BufferedReader b = new BufferedReader(
                 new FileReader(this.path))) {
-            b.lines().filter(s -> s.contains("=")
-                            && !s.startsWith("#")
-                            && !s.endsWith("="))
-                    .map(s -> s.split("="))
+            b.lines().filter(s -> !s.startsWith("#") && !s.isEmpty())
+                    .peek(s -> {
+                        if (!s.contains("=")
+                                || s.endsWith("=")
+                                || s.startsWith("=")) {
+                            throw new IllegalArgumentException("Error");
+                        }
+                    })
+                    .map(s -> s.split("=", 2))
                     .forEach(s -> values.put(s[0], s[1]));
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,11 +47,4 @@ public class Config {
         }
         return out.toString();
     }
-
-    public static void main(String[] args) {
-        Config config = new Config("./data/app.properties");
-        config.load();
-        System.out.println(config.value("hibernate.connection.password"));
-    }
-
 }
