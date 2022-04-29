@@ -40,6 +40,7 @@ public class User {
     @Override
     public int hashCode() {
         int rsl = Integer.hashCode(id);
-        return 31 * rsl + name.hashCode();
+        return 31 * rsl
+                + name.hashCode();
     }
 }
