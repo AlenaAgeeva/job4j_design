@@ -16,11 +16,17 @@ public class Search {
     }
 
     public void validation(String[] arg) {
-        if (arg.length == 0) {
+        if (arg.length != 2) {
             throw new IllegalArgumentException("Root folder is null. Usage java -jar search.jar ROOT_FOLDER.");
         }
         if (!Paths.get(arg[0]).toFile().exists()) {
             throw new IllegalArgumentException("File does not exit.");
+        }
+        if (!Paths.get(arg[0]).toFile().isDirectory()) {
+            throw new IllegalArgumentException("Not a directory.");
+        }
+        if (!arg[1].startsWith(".")) {
+            throw new IllegalArgumentException("Not a directory.");
         }
     }
 
