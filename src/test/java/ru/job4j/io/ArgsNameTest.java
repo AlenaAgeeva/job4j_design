@@ -32,27 +32,27 @@ public class ArgsNameTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenWrongSomeArgument() {
-        ArgsName jvm = ArgsName.of(new String[] {"-enconding=UTF-8", "-Xmx="});
+        ArgsName jvm = ArgsName.of(new String[] {"-encoding=UTF-8", "-Xmx="});
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenWrongTemplate() {
         ArgsName jvm = ArgsName.of(new String[] {"--Xmx=512"});
-        jvm.get("Xms");
+        jvm.get("Xmx");
     }
     @Test(expected = IllegalArgumentException.class)
     public void whenWrongTemplate1() {
         ArgsName jvm = ArgsName.of(new String[] {"=Xmx=512"});
-        jvm.get("Xms");
+        jvm.get("Xmx");
     }
     @Test(expected = IllegalArgumentException.class)
     public void whenWrongTemplate2() {
         ArgsName jvm = ArgsName.of(new String[] {"Xmx=512"});
-        jvm.get("Xms");
+        jvm.get("Xmx");
     }
     @Test(expected = IllegalArgumentException.class)
     public void whenWrongTemplate3() {
         ArgsName jvm = ArgsName.of(new String[] {"*Xmx=512"});
-        jvm.get("Xms");
+        jvm.get("Xmx");
     }
 }

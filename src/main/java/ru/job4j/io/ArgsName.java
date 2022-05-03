@@ -15,26 +15,25 @@ public class ArgsName {
     }
 
     private void parse(String[] args) {
-        Arrays.stream(args).peek(s -> {
-                    if (s.startsWith("--")
-                            || s.startsWith("=")
-                            || !s.startsWith("-")) {
+        Arrays.stream(args)
+                .peek(s -> {
+                    if (!s.startsWith("-")
+                            || !s.contains("=")) {
                         throw new IllegalArgumentException("Not correct request");
                     }
-                }).filter(s -> s.contains("=")
-                        && !s.contains("encoding"))
+                })
                 .map(s -> s.split("=", 2))
+                .peek(s -> {
+                    if (s[0].isEmpty() || s[1].isEmpty()) {
+                        throw new IllegalArgumentException("Key or value are null");
+                    }
+                })
                 .forEach(s -> values.put(s[0].substring(1), s[1]));
     }
 
     public static ArgsName of(String[] args) {
         if (args.length == 0) {
             throw new IllegalArgumentException("Do not have arguments");
-        }
-        if (args.length == 2
-                && !args[0].contains("encoding")
-                && !args[1].contains("encoding")) {
-            throw new IllegalArgumentException("The wrong argument with encoding");
         }
         ArgsName names = new ArgsName();
         names.parse(args);
@@ -48,7 +47,7 @@ public class ArgsName {
         ArgsName zip = ArgsName.of(new String[]{"-out=project.zip", "-encoding=UTF-8"});
         System.out.println(zip.get("out"));
 
-        ArgsName zip2 = ArgsName.of(new String[]{"-encoding=UTF-8", "-out=project.zip"});
+        ArgsName zip2 = ArgsName.of(new String[]{"-encoding=UTF-8", "-out="});
         System.out.println(zip2.get("out"));
     }
 }
