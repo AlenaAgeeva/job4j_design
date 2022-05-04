@@ -37,7 +37,10 @@ public class Zip {
         Path directory = Path.of(arguments.get("d"));
         Path output = Path.of(arguments.get("o"));
         String exclude = arguments.get("e");
-        if (args.length != 3 || directory == null || output == null || exclude == null) {
+        if (args.length != 3
+                || directory == null
+                || output == null
+                || exclude == null) {
             throw new IllegalArgumentException("Some arguments are missing");
         }
         if (!Paths.get(arguments.get("d")).toFile().exists()) {
@@ -48,7 +51,8 @@ public class Zip {
 
     public static void main(String[] args) throws IOException {
         ArgsName arsName = validateArgs(args);
-        List<Path> list = Search.search(Paths.get(arsName.get("d")), s -> !s.toFile().getName().endsWith(arsName.get("e")));
+        List<Path> list = Search.search(Paths.get(arsName.get("d")),
+                s -> !s.toFile().getName().endsWith(arsName.get("e")));
         new Zip().packFiles(list, new File(arsName.get("o")));
     }
 }
