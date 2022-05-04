@@ -19,11 +19,11 @@ public class ConsoleChat {
 
     public void run() {
         try (BufferedReader b = new BufferedReader(new InputStreamReader(System.in))) {
-            String userPhrase;
+            String userPhrase = b.readLine();
             List<String> botPh = readPhrases();
             List<String> log = new ArrayList<>();
             boolean canRead = true;
-            while (!OUT.equals(userPhrase = b.readLine())) {
+            while (!OUT.equals(userPhrase)) {
                 String s = botPh.get(new Random().nextInt(botPh.size()));
                 if (canRead) {
                     if (!STOP.equals(userPhrase)) {
@@ -44,6 +44,7 @@ public class ConsoleChat {
                     log.add("Bot: " + s);
                     System.out.println(s);
                 }
+                userPhrase = b.readLine();
             }
             saveLog(log);
         } catch (IOException e) {
