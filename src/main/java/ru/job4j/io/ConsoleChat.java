@@ -23,7 +23,7 @@ public class ConsoleChat {
             List<String> botPh = readPhrases();
             List<String> log = new ArrayList<>();
             boolean canRead = true;
-            while (!OUT.equals(updateUserPhrase(b))) {
+            while (!OUT.equals((userPhrase = b.readLine()))) {
                 String s = botPh.get(new Random().nextInt(botPh.size()));
                 if (canRead) {
                     if (STOP.equals(userPhrase)) {
@@ -50,11 +50,6 @@ public class ConsoleChat {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private String updateUserPhrase(BufferedReader br) throws IOException {
-        userPhrase = br.readLine();
-        return userPhrase;
     }
 
     private List<String> readPhrases() {
