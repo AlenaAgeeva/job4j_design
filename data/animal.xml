@@ -1,0 +1,9 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<animal isPet="true" age="5" nickName="Nick">
+    <pet paws="4"/>
+    <habits>
+        <habit>swim</habit>
+        <habit>run</habit>
+        <habit>eat</habit>
+    </habits>
+</animal>
