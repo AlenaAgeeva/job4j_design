@@ -1,4 +1,4 @@
-create table employee(
+create table employee (
 	id serial primary key,
 	age int,
 	married bool,
