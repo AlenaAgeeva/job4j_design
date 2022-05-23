@@ -6,7 +6,6 @@ create table student(
 	id serial primary key,
 	first_name varchar(255),
 	last_name varchar(255)
-
 );
 create table rating(
 	id serial primary key,
