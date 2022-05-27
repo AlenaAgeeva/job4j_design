@@ -57,16 +57,26 @@ insert into employees(name,departments_id) values(null,1);
 insert into employees(name,departments_id) values(null,2);
 insert into employees(name,departments_id) values(null,7);
 insert into employees(name,departments_id) values(null,9);
+insert into employees(departments_id) values(9);
+insert into employees(departments_id) values(1);
+insert into employees(departments_id) values(2);
+insert into employees(departments_id) values(3);
 
+
+/*2. Выполнить запросы с left, rigth, full, cross соединениями*/
 select * from departments d left join employees e on e.departments_id = d.id;
 select * from departments d right join employees e on e.departments_id = d.id;
 select * from employees cross join departments;
 
-select d.name, e.name from departments d left join employees e on e.departments_id = d.id
+
+/*3. Используя left join найти департаменты, у которых нет работников*/
+select distinct d.name from employees e left join departments d on e.departments_id = d.id
 where e.name is null;
 
+/*4. Используя left и right join написать запросы, которые давали бы одинаковый результат.*/
 select * from employees e left join departments d on e.departments_id = d.id
 where e.name is not null and d.name is not null;
+
 select * from employees e right join departments d on e.departments_id = d.id
 where e.name is not null;
 
