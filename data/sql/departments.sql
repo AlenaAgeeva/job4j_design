@@ -17,6 +17,8 @@ insert into departments(name) values ('seventh');
 insert into departments(name) values ('eighth');
 insert into departments(name) values ('ninth');
 insert into departments(name) values ('tenth');
+insert into departments(name) values ('nothing');
+insert into departments(name) values ('empty');
 insert into employees(name,departments_id) values('Sam',1);
 insert into employees(name,departments_id) values('Bill',1);
 insert into employees(name,departments_id) values('Matt',1);
@@ -70,8 +72,9 @@ select * from employees cross join departments;
 
 
 /*3. Используя left join найти департаменты, у которых нет работников*/
-select distinct d.name from employees e left join departments d on e.departments_id = d.id
-where e.name is null;
+select * from departments d left join employees e
+on d.id = e.departments_id
+where e.departments_id is null;
 
 /*4. Используя left и right join написать запросы, которые давали бы одинаковый результат.*/
 select * from employees e left join departments d on e.departments_id = d.id
