@@ -1,4 +1,4 @@
-package ru.job4j.collection.list.tree;
+package ru.job4j.collection.tree;
 
 import java.util.*;
 

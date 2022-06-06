@@ -1,7 +1,6 @@
-package ru.job4j.collection.list.map;
+package ru.job4j.collection.map;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 public class User {
     private String name;

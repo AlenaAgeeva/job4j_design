@@ -1,4 +1,4 @@
-package ru.job4j.collection.list.map;
+package ru.job4j.collection.map;
 
 import java.util.*;
 
