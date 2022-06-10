@@ -16,6 +16,7 @@ public class ConnectionDemo {
         String password = config.value("jdbc.password");
         return DriverManager.getConnection(url, login, password);
     }
+
     public static String getTableScheme(Connection connection, String tableName) throws Exception {
         var rowSeparator = "-".repeat(30).concat(System.lineSeparator());
         var header = String.format("%-15s|%-15s%n", "NAME", "TYPE");
