@@ -3,9 +3,7 @@ package ru.job4j.jdbc;
 import ru.job4j.io.Config;
 
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.StringJoiner;
 
 public class ConnectionDemo {
