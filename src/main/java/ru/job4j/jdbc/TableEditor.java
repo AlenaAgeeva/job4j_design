@@ -1,9 +1,5 @@
 package ru.job4j.jdbc;
 
-import org.postgresql.util.PSQLException;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -50,9 +46,9 @@ public class TableEditor implements AutoCloseable {
     public void query(String sql, String tableName) throws Exception {
         try (Statement statement = connection.createStatement()) {
             statement.execute(sql);
-            System.out.println(TableEditor.getTableScheme(connection, tableName));
-        } catch (PSQLException e) {
-            System.out.println(e.getServerErrorMessage());
+            if (!sql.toLowerCase().startsWith("drop")) {
+                System.out.println(TableEditor.getTableScheme(connection, tableName));
+            }
         }
     }
 
@@ -141,6 +137,11 @@ public class TableEditor implements AutoCloseable {
         return buffer.toString();
     }
 
+    /**
+     * A method closes connection to a database
+     *
+     * @throws Exception
+     */
     @Override
     public void close() throws Exception {
         if (connection != null) {
@@ -150,11 +151,11 @@ public class TableEditor implements AutoCloseable {
 
     public static void main(String[] args) throws Exception {
         try (InputStream in = TableEditor.class.getClassLoader()
-                .getResourceAsStream("src/main/resources/jdbc_app.properties")
+                .getResourceAsStream("jdbc_app.properties")
         ) {
             Properties properties = new Properties();
+            properties.load(in);
             try (TableEditor tableEditor = new TableEditor(properties)) {
-                properties.load(in);
                 tableEditor.createTable("someTable");
                 tableEditor.addColumn("someTable", "id", "serial primary key");
                 tableEditor.addColumn("someTable", "name", "text");
