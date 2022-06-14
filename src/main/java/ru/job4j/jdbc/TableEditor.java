@@ -1,6 +1,10 @@
 package ru.job4j.jdbc;
 
+import org.postgresql.util.PSQLException;
+
+import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -46,7 +50,9 @@ public class TableEditor implements AutoCloseable {
     public void query(String sql, String tableName) throws Exception {
         try (Statement statement = connection.createStatement()) {
             statement.execute(sql);
-            System.out.println(TableEditor.getTableScheme(this.connection, tableName));
+            System.out.println(TableEditor.getTableScheme(connection, tableName));
+        } catch (PSQLException e) {
+            System.out.println(e.getServerErrorMessage());
         }
     }
 
@@ -143,15 +149,21 @@ public class TableEditor implements AutoCloseable {
     }
 
     public static void main(String[] args) throws Exception {
-        Properties properties = new Properties();
-        properties.load(new FileReader("./data/jdbc_app.properties"));
-        TableEditor tableEditor = new TableEditor(properties);
-        tableEditor.createTable("someTable");
-        tableEditor.addColumn("someTable", "id", "serial primary key");
-        tableEditor.addColumn("someTable", "name", "text");
-        tableEditor.addColumn("someTable", "date", "date");
-        tableEditor.dropColumn("someTable", "name");
-        tableEditor.renameColumn("someTable", "date", "date2");
-        tableEditor.dropTable("someTable");
+        try (InputStream in = TableEditor.class.getClassLoader()
+                .getResourceAsStream("src/main/resources/jdbc_app.properties")
+        ) {
+            Properties properties = new Properties();
+            try (TableEditor tableEditor = new TableEditor(properties)) {
+                properties.load(in);
+                tableEditor.createTable("someTable");
+                tableEditor.addColumn("someTable", "id", "serial primary key");
+                tableEditor.addColumn("someTable", "name", "text");
+                tableEditor.addColumn("someTable", "date", "date");
+                tableEditor.dropColumn("someTable", "name");
+                tableEditor.renameColumn("someTable", "date", "date2");
+                tableEditor.dropTable("someTable");
+            }
+        }
     }
 }
+
