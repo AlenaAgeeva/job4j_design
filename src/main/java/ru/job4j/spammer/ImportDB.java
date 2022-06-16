@@ -25,7 +25,11 @@ public class ImportDB {
             rd.lines()
                     .filter(s -> s.contains(";"))
                     .map(s -> s.split(";"))
-                    .filter(s -> s.length == 2)
+                    .peek(s -> {
+                        if (s.length != 2 || s[0].isBlank() || s[1].isBlank()) {
+                            throw new IllegalArgumentException("Wrong argument");
+                        }
+                    })
                     .forEach(s -> users.add(new User(s[0], s[1])));
         }
         return users;
