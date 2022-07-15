@@ -3,6 +3,7 @@ package ru.job4j.gc;
 import java.util.Random;
 
 public class GCTypeDemo {
+
     public static void main(String[] args) {
         Random random = new Random();
         int length = 100;
