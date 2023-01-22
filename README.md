@@ -7,3 +7,4 @@
 - SQL, JDBC
 - Garbage Collection
 - ООД
+- .
