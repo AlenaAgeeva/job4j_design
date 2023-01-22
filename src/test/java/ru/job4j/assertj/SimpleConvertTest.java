@@ -39,7 +39,6 @@ class SimpleConvertTest {
                 ).anySatisfy(e ->
                         assertThat(e.contains("con"))
                 ).first().isEqualTo("first");
-
     }
 
     @Test
@@ -54,7 +53,6 @@ class SimpleConvertTest {
                 .containsOnlyOnce("white")
                 .hasSize(7)
                 .first().isEqualTo("red");
-
     }
 
     @Test
