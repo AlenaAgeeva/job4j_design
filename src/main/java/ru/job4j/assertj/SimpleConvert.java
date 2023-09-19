@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.*;
 
 public class SimpleConvert {
+
     public String[] toArray(String... example) {
         return example;
     }
