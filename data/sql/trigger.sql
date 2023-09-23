@@ -10,54 +10,53 @@ create table products (
     price integer
 );
 
-create or replace function tax()
-    returns trigger as
-$$
-    BEGIN
+CREATE OR REPLACE FUNCTION add_tax_to_product_after_st()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
         update products
-        set price = price + price * 0.09
+        set price = price + price * 0.20
         where id = (select id from inserted);
        return new;
     END;
-$$
-LANGUAGE 'plpgsql';
+$BODY$;
 
-create trigger statement_tax_after
-after insert
-on products
-referencing new table as inserted
-for each statement
-execute procedure tax();
+
+CREATE TRIGGER after_st_tax_trigger
+    AFTER INSERT
+    ON products
+    REFERENCING NEW TABLE AS inserted
+    FOR EACH STATEMENT
+    EXECUTE FUNCTION add_tax_to_product();
 
 insert into products (name, producer, count, price) VALUES ('product_2', 'producer_2', 1, 50);
 insert into products (name, producer, count, price) VALUES ('product_1', 'producer_3', 10, 150);
 
-drop trigger statement_tax_after on products;
-
 -- 2) Триггер должен срабатывать до вставки данных и насчитывать налог на товар (нужно прибавить налог к цене товара).
 --Здесь используем row уровень.
 
-create or replace function tax()
-    returns trigger as
-$$
-    BEGIN
-        update products
-        set price = price + price * 0.09
-        where count > 0;
-       return new;
-    END;
-$$
-LANGUAGE 'plpgsql';
+CREATE OR REPLACE FUNCTION add_tax_to_product_before_row()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
+new.price = new.price + new.price *0.20;
+return new;
+END;
+$BODY$;
 
-create trigger row_tax_before
-before insert
-on products
-for each row
-execute procedure tax();
+CREATE TRIGGER before_row_tax_trigger
+    BEFORE INSERT
+    ON products
+    FOR EACH ROW
+    EXECUTE FUNCTION before_insert_tax();
 
 insert into products (name, producer, count, price) VALUES ('product_2', 'producer_3', 23, 50);
-
-drop trigger row_tax_before on products;
 
 --3) Нужно написать триггер на row уровне, который при вставке продукта в таблицу products,
 --будет заносить имя, цену и текущую дату в таблицу history_of_price.
@@ -69,22 +68,24 @@ create table history_of_price (
     date timestamp
 );
 
-create or replace function price()
-    returns trigger as
-$$
-    BEGIN
-        insert into history_of_price (name, price, date)
-        VALUES ((select name from inserted), (select price from inserted), CURRENT_DATE);
-       return new;
-    END;
-$$
-LANGUAGE 'plpgsql';
+CREATE OR REPLACE FUNCTION transfer_data()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
+insert into history_of_price (name, price, date)
+        VALUES (new.name, new.price, CURRENT_DATE);
+        return new;
+END;
+$BODY$;
 
-create trigger row_history_price_after
-after insert
-on products
-referencing new table as inserted
-for each row
-execute procedure price();
+
+CREATE TRIGGER after_row_transfer_data_trigger
+    AFTER INSERT
+    ON products
+    FOR EACH ROW
+    EXECUTE FUNCTION transfer_data();
 
 insert into products (name, producer, count, price) VALUES ('product_2', 'producer_3', 23, 50);
