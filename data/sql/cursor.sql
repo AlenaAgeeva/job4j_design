@@ -42,6 +42,7 @@ fetch prior from c_pr;
 move first from c_pr;
 fetch first from c_pr;
 close c_pr;
+commit;
 drop table products;
 
 
