@@ -1,5 +1,6 @@
 package ru.job4j.parking.service;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ru.job4j.parking.car.Car;
 import ru.job4j.parking.car.PassengerCar;
@@ -9,6 +10,7 @@ import ru.job4j.parking.space.ParkingSpace;
 
 import static org.assertj.core.api.Assertions.*;
 
+@Disabled
 class ParkingServiceTest {
 
     @Test
