@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.*;
 @Disabled
 class ParkingServiceTest {
 
-    @Test
+    /*@Test*/
     void whenCarIsPlacedIntoSpace() throws ParkingException {
         ParkingService parkingService = new ParkingService(new ParkingSpace(10, 5));
         Car car = new PassengerCar("Nissan", 1);
@@ -21,7 +21,7 @@ class ParkingServiceTest {
         assertThat(parkingService.getParkingSpace().getSpace().contains(car));
     }
 
-    @Test
+    /*@Test*/
     void whenCarIsRemovedFromSpace() throws ParkingException {
         ParkingService parkingService = new ParkingService(new ParkingSpace(10, 5));
         Car nissan = new PassengerCar("Nissan", 1);
@@ -34,7 +34,7 @@ class ParkingServiceTest {
         assertThat(!parkingService.getParkingSpace().getSpace().contains(audi));
     }
 
-    @Test
+    /*@Test*/
     void whenNoParkingSpaceAndError() throws ParkingException {
         ParkingSpace parkingSpace = new ParkingSpace(10, 5);
         ParkingService parkingService = new ParkingService(parkingSpace);

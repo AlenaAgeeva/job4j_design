@@ -13,13 +13,13 @@ import static org.assertj.core.api.Assertions.*;
 @Disabled
 class ParkingSpaceTest {
 
-    @Test
+    /*@Test*/
     void calculateFreeParkingSpaceWhenNoCarsIntoParkingSpace() {
         ParkingSpace parkingSpace = new ParkingSpace(10, 5);
         assertThat(parkingSpace.calculateFreeParkingSpace()).isEqualTo(15);
     }
 
-    @Test
+    /*@Test*/
     void calculateFreeParkingSpaceWithPassengerCars() throws ParkingException {
         ParkingSpace parkingSpace = new ParkingSpace(10, 5);
         ParkingService parkingService = new ParkingService(parkingSpace);
@@ -32,7 +32,7 @@ class ParkingSpaceTest {
         assertThat(parkingSpace.calculateFreeParkingSpace()).isEqualTo(12);
     }
 
-    @Test
+    /*@Test*/
     void calculateFreeParkingSpaceWithPassengerAndTruckCars() throws ParkingException {
         ParkingSpace parkingSpace = new ParkingSpace(10, 5);
         ParkingService parkingService = new ParkingService(parkingSpace);
