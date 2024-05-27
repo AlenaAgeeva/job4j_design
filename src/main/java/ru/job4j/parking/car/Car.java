@@ -1,5 +1,7 @@
 package ru.job4j.parking.car;
 
+import java.util.Objects;
+
 public abstract class Car {
     private String name;
     private int size;
@@ -30,5 +32,22 @@ public abstract class Car {
         return "Car{"
                 + "name='" + name + '\''
                 + ", size=" + size + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Car car = (Car) o;
+        return size == car.size && name.equals(car.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, size);
     }
 }

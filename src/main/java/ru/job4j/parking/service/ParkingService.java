@@ -11,6 +11,10 @@ public class ParkingService {
         this.parkingSpace = parkingSpace;
     }
 
+    public ParkingSpace getParkingSpace() {
+        return parkingSpace;
+    }
+
     public boolean placeCar(Car car) throws ParkingException {
         return true;
     }
