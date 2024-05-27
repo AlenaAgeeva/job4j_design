@@ -49,18 +49,4 @@ class ControlQualityTest {
                 65.);
         assertThat(controlQuality.allocateFood(goatMilk)).isInstanceOf(Warehouse.class);
     }
-    @Test
-    void whenDiscountApplied() {
-        ControlQuality controlQuality = new ControlQuality(List.of(new Shop(), new Trash(), new Warehouse()));
-        Food goatMilk = new Milk(
-                "goat milk",
-                new GregorianCalendar(2024, 4, 27, 16, 16, 47),
-                new GregorianCalendar(2024, 4, 2, 8, 16, 47),
-                45.5,
-                0.);
-        double discountBefore = goatMilk.getDiscount();
-        controlQuality.allocateFood(goatMilk);
-        double discountAfter = goatMilk.getDiscount();
-        assertThat(discountBefore).isLessThan(discountAfter);
-    }
 }

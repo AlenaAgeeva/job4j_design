@@ -1,6 +1,5 @@
 package ru.job4j.food.model;
 
-import java.time.LocalDateTime;
 import java.util.Calendar;
 
 public class Pastry extends Food {
