@@ -16,10 +16,16 @@ public class ParkingService {
     }
 
     public boolean placeCar(Car car) throws ParkingException {
-        return true;
+        if (parkingSpace.calculateFreeParkingSpace() <= 0) {
+            throw new ParkingException("No free parking space available.");
+        }
+        return parkingSpace.getSpace().add(car);
     }
 
     public boolean removeCar(Car car) throws ParkingException {
-        return true;
+        if (!parkingSpace.getSpace().contains(car)) {
+            throw new ParkingException("No such a car onto parking space.");
+        }
+        return parkingSpace.getSpace().remove(car);
     }
 }

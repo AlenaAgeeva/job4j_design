@@ -4,6 +4,7 @@ import ru.job4j.parking.car.Car;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class ParkingSpace {
     private final List<Car> space;
@@ -37,6 +38,7 @@ public class ParkingSpace {
     }
 
     public int calculateFreeParkingSpace() {
-        return 0;
+        return (passengerCarQuantity + truckQuantity)
+                - space.stream().flatMapToInt(s -> IntStream.of(s.getSize())).sum();
     }
 }
