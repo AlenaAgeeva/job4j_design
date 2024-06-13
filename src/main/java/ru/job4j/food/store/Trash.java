@@ -25,7 +25,9 @@ public class Trash extends AbstractStore {
     }
 
     public void putIntoStore(Food food) {
-        trashFood.add(food);
+        if (!trashFood.contains(food)) {
+            trashFood.add(food);
+        }
     }
 
     public boolean removeFromStore(Food food) {

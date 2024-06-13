@@ -4,6 +4,7 @@ import ru.job4j.food.model.Food;
 import ru.job4j.food.store.Store;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ControlQuality {
     private List<Store> stores;
@@ -35,5 +36,14 @@ public class ControlQuality {
                 get();
         store.putIntoStore(food);
         return store;
+    }
+
+    public void resort() {
+        List<Food> allStoresFood = stores.stream()
+                .flatMap(s -> s.getStore()
+                        .stream())
+                .collect(Collectors.toList());
+        stores.forEach(Store::clearStore);
+        allStoresFood.forEach(this::allocateFood);
     }
 }

@@ -25,7 +25,9 @@ public class Warehouse extends AbstractStore {
     }
 
     public void putIntoStore(Food food) {
-        wareHouseFood.add(food);
+        if (!wareHouseFood.contains(food)) {
+            wareHouseFood.add(food);
+        }
     }
 
     public boolean removeFromStore(Food food) {

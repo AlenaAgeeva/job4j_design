@@ -1,6 +1,7 @@
 package ru.job4j.food.model;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class Food {
     private String name;
@@ -55,5 +56,26 @@ public class Food {
 
     public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Food food = (Food) o;
+        return Double.compare(food.price, price) == 0
+                && Double.compare(food.discount, discount) == 0
+                && name.equals(food.name)
+                && expiryDate.equals(food.expiryDate)
+                && createDate.equals(food.createDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, expiryDate, createDate, price, discount);
     }
 }
