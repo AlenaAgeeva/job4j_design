@@ -3,6 +3,8 @@ package ru.job4j.algo.stacks;
 import java.util.Stack;
 
 public class Brackets {
+
+
     public static boolean match(char a, char b) {
         return (a == '(' && b == ')')
                 || (a == '{' && b == '}')
